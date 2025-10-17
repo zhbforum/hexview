@@ -48,12 +48,12 @@ jobs:
       - name: Package
         shell: bash
         run: |
-          mkdir -p dist
-          cp LICENSE README.md ${{ matrix.bin }} .
+          mkdir -p dist pkg
+          cp ${{ matrix.bin }} LICENSE README.md pkg/
           if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
-            7z a dist/${{ matrix.archive }} ${{ matrix.bin }} LICENSE README.md
+            7z a dist/${{ matrix.archive }} pkg/*
           else
-            tar -czf dist/${{ matrix.archive }} ${{ matrix.bin }} LICENSE README.md
+            tar -czf dist/${{ matrix.archive }} -C pkg .
           fi
 
       - name: Upload artifact
